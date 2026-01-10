@@ -17,6 +17,7 @@ Now we can run:
 
 ```bash
 docker build \
+    --no-cache \
     --build-arg NVIM_TAG=${NVIM_TAG} \
     -f docker/Dockerfile \
     -t neovim-test:${NVIM_TAG} \

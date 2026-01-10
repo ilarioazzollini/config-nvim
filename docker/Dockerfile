@@ -37,5 +37,13 @@ RUN cd ${HOME}/neovim && \
     make CMAKE_BUILD_TYPE=Release && \
     make install
 
+# Install kickstart.nvim dependencies
+RUN apt-get update && apt-get install -q -y \
+    ripgrep \
+    unzip \
+    xclip \
+    fd-find \
+    && rm -rf /var/lib/apt/lists/*
+
 # copy the nvim config folder in the default location
 COPY ./nvim ${HOME}/.config/nvim
