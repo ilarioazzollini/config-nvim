@@ -69,4 +69,4 @@ RUN apt-get update && apt-get install -y \
 RUN npm install -g tree-sitter-cli
 
 # copy the nvim config folder in the default location
-COPY ./nvim ${HOME}/.config/nvim
+# COPY ./nvim ${HOME}/.config/nvim

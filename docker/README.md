@@ -34,6 +34,7 @@ docker run \
     --rm \
     --privileged \
     --network=host \
+    -v ${PWD}/nvim:/root/.config/nvim \
     --name neovim-test-container \
     neovim-test:${NVIM_TAG} \
     bash
