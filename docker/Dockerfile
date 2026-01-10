@@ -45,5 +45,28 @@ RUN apt-get update && apt-get install -q -y \
     fd-find \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Lua + headers for LuaRocks
+RUN apt-get update && apt-get install -y \
+    lua5.1 \
+    liblua5.1-0-dev \
+    pkg-config \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install LuaRocks
+RUN wget https://luarocks.org/releases/luarocks-3.13.0.tar.gz && \
+    tar zxpf luarocks-3.13.0.tar.gz && \
+    cd luarocks-3.13.0 && \
+    ./configure && make && make install && \
+    luarocks install luasocket
+
+# Install node (needed for tree-sitter-cli)
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install tree-sitter CLI
+RUN npm install -g tree-sitter-cli
+
 # copy the nvim config folder in the default location
 COPY ./nvim ${HOME}/.config/nvim

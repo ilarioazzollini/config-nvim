@@ -40,3 +40,7 @@ docker run \
 ```
 
 and from the container simply run `nvim` and start testing!
+
+## Checkhealth
+
+:checkhealth
