@@ -2,6 +2,7 @@ FROM ubuntu:24.04
 
 # Docker build arguments
 ARG NVIM_TAG=v0.11.5
+ARG RUST_VERSION=1.92.0
 
 # Environment variables
 ENV HOME=/root
@@ -70,3 +71,33 @@ RUN npm install -g tree-sitter-cli
 
 # copy the nvim config folder in the default location
 # COPY ./nvim ${HOME}/.config/nvim
+
+### RUST ###
+
+# Install system dependencies required by rustup and common crates
+RUN apt-get update && apt-get install -y \
+    # build-essential \ ALREADY INSTALLED
+    # curl \
+    ca-certificates \
+    # pkg-config \ ALREADY INSTALLED
+    libssl-dev \
+    # git \ ALREADY INSTALLED
+    && rm -rf /var/lib/apt/lists/*
+
+# Configure rustup
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+
+# Install Rust (stable) via rustup
+# RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path --default-toolchain stable
+RUN curl https://sh.rustup.rs -sSf | sh -s -- \
+    -y \
+    --no-modify-path \
+    --default-toolchain ${RUST_VERSION}
+
+# Install additional Rust components
+RUN rustup component add \
+    rustfmt \
+    clippy \
+    rust-analyzer

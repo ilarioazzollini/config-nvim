@@ -11,6 +11,7 @@ After having cloned this repo locally on our computer, let us navigate to the `c
 ```bash
 cd config-nvim
 export NVIM_TAG=v0.11.5
+export RUST_VERSION=1.92.0
 ```
 
 Now we can run:
@@ -19,8 +20,9 @@ Now we can run:
 docker build \
     --no-cache \
     --build-arg NVIM_TAG=${NVIM_TAG} \
+    --build-arg RUST_VERSION=${RUST_VERSION} \
     -f docker/Dockerfile \
-    -t neovim-test:${NVIM_TAG} \
+    -t neovim-test:latest \
     .
 ```
 
@@ -35,8 +37,9 @@ docker run \
     --privileged \
     --network=host \
     -v ${PWD}/nvim:/root/.config/nvim \
+    -v ${PWD}/hello_rust:/root/hello_rust \
     --name neovim-test-container \
-    neovim-test:${NVIM_TAG} \
+    neovim-test:latest \
     bash
 ```
 
